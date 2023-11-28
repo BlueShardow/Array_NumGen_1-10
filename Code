@@ -1,0 +1,156 @@
+using System;
+
+class Program 
+{
+ Program program;
+
+ int input, endLoop = 0, choice = 0;
+ int[] array, arrayFre, arrayEx; // vars
+
+ public Program ()
+ {
+  program = this;
+  array = new int[program.input];
+  arrayEx = new int[program.input];
+  arrayFre = new int[10];
+ } // vars to edit later
+
+ public void Input (string[] args) // Input
+ {
+  Console.WriteLine (
+    "\nHello there! Please put in the amount of numbers you would like randimanzed 1 - 10! Make sure to hit enter after you type the number.\n"
+  );
+  string inputS = Console.ReadLine();
+
+  input = Convert.ToInt32 (inputS);
+
+  array = new int[program.input]; // array var
+ } // end of Input
+
+ Random random = new Random(); // random var
+
+ public void RanNums (string[] args) // RanNums
+ {
+  for (int i = 0; i < input; i ++) { // for loop (input) amount of times
+    array[i] = random.Next (1,11); // 1 - 10
+  } // end of for loop
+ } // end of RanNums
+
+ public void PrintNums (string[] args) // PrintNums
+ {
+  for (int i = 0; i < input; i ++) { // for loop (input) amount of times
+    Console.Write (array[i] + ", ");
+  } // end of for loop
+ } // end of PrintNums
+
+ public void MenuAndOptions (string[] args) // MenuAndOptions
+ {
+  Console.WriteLine (
+    "\n\nMenu:\n1: Display the numbers\n2: Display the numbers in reverse\n3: Display the numbers in order\n4: Display the numbers in reverse order\n5: Display the numbers' frequency\n6: Exit\n\nChoice:"
+  ); // menu
+  string choiceS = Console.ReadLine ();
+
+  program.choice = Convert.ToInt32 (choiceS);
+ } // end of MenuAndOptions
+
+ public void PrintNumsRev (string[] args) // PrintNumsRev
+ {
+  for (int i = input - 1; i >= 0; i --) { // for loop (input) amount of times
+    Console.Write (array[i] + ", ");
+  } // end of for loop
+ } // end of PrintNumsRev
+
+ public void PrintNumsOrder (string[] args) // PrintNumsOrder
+ {
+  Console.WriteLine ("\nHere are the numbers in order:");
+
+  int[] arrayEx = new int[program.input]; // Initialize a new array with the same length as 'array'
+
+  Array.Copy (array, arrayEx, array.Length);
+  Array.Sort (arrayEx);
+
+  for (int i = 0; i < program.input; i ++) { // for loop (prints the array in order)
+    Console.Write (arrayEx[i] + ", ");
+  } // end of for loop
+ } // end of PrintNumsOrder
+
+ public void PrintNumsRevOrder (string[] args) // PrintNumsRevOrder
+ {
+  Console.WriteLine ("\nHere are the numbers in reverse order:");
+
+  int[] arrayEx = new int[program.input]; // Initialize a new array with the same length as 'array'
+   
+  Array.Copy (array, arrayEx, array.Length);
+  Array.Sort (arrayEx);
+
+  for (int i = program.input - 1; i >= 0; i --) { // for loop (prints the array in reverse order)
+    Console.Write (arrayEx[i] + ", ");
+  } // end of for loop
+ } // end of PrintNumsRevOrder
+
+ public void PrintFrequency (string[] args) // PrintFrequency
+ {
+  Console.WriteLine ("\nHere are the frequencies of each number:");
+
+  for (int j = 0; j < 10; j ++) { // to check all 10 possibiltes
+    for (int i = 0; i < program.input; i ++) { // for all nums in the array
+      if (array[i] == j + 1) { // for all 10 nums
+        arrayFre[j] = arrayFre[j] + 1;
+      } // end of for all 10 nums
+    } // end of for all nums in the array
+  } // end of to check all 10 possibiltes
+  for (int i = 0; i < 10; i ++) { // for all 10 nums
+    int j = i + 1;
+
+    Console.WriteLine (j + " occured: " + arrayFre[i] + " times");
+  } // end of for all 10 nums
+ } // end of PrintFrequency
+
+ public static void Main (string[] args) // Main___
+ {
+  Program program = new Program ();
+  program.Input (args);
+  program.RanNums (args);
+
+  Console.WriteLine ("\nHere are your numbers:");
+  program.PrintNums (args);
+
+  Console.WriteLine ( 
+    "\n\nType in the number of the choice you would like, then hit enter."
+  ); // insturctions
+
+  do { // do while loop 
+    program.MenuAndOptions (args);
+
+    if (program.choice == 6) { // if exit
+      Console.WriteLine ("\nGoodbye!");
+      program.endLoop = 1;
+    } // end of if exit
+
+    else if (program.choice == 1) { // if display
+      Console.WriteLine ("\nHere are your numbers again:");
+      program.PrintNums (args);
+    } // end of if print
+
+    else if (program.choice == 2) { // if display in reverse
+      program.PrintNumsRev (args);
+    } // end of if display in reverse
+
+    else if (program.choice == 3) { // if display in order
+      program.PrintNumsOrder (args);
+    } // end of if display in order
+
+    else if (program.choice == 4) { // if display in reverse order
+      program.PrintNumsRevOrder (args);
+    } // end of if display in reverse order
+
+    else if (program.choice == 5) { // if display frequency
+      program.PrintFrequency (args);
+    } // end of if display frequency
+
+    else { // error
+      Console.WriteLine ("Oops, something went wrong.");
+    } // end of error
+  } while (program.endLoop == 0); // end of do while loop
+ } // end of Main
+}
